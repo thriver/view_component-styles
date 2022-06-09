@@ -8,13 +8,14 @@ Gem::Specification.new do |spec|
   spec.authors       = ['Ryan Taylor']
   spec.email         = ['2320507+ryantaylor@users.noreply.github.com']
 
-  spec.summary       = 'Styles for components'
-  spec.description   = 'Styles for components'
+  spec.summary       = 'Stylesheet aggregation for view components'
+  spec.description   = 'Automatically combine component styles in a view into a single stylesheet'
   spec.homepage      = 'https://github.com/thriver/view_component-styles'
   spec.license       = 'MIT'
-  spec.required_ruby_version = '>= 2.7.0'
+  spec.required_ruby_version = Gem::Requirement.new('>= 2.7.0')
 
-  spec.metadata['allowed_push_host'] = "TODO: Set to 'https://mygemserver.com'"
+  spec.metadata['allowed_push_host'] = 'https://rubygems.org'
+  spec.metadata['rubygems_mfa_required'] = 'true'
 
   spec.metadata['homepage_uri'] = spec.homepage
   spec.metadata['source_code_uri'] = spec.homepage
@@ -24,13 +25,10 @@ Gem::Specification.new do |spec|
   spec.files = Dir.chdir(File.expand_path(__dir__)) do
     `git ls-files -z`.split("\x0").reject { |f| f.match(%r{\A(?:test|spec|features)/}) }
   end
+
   spec.bindir        = 'exe'
   spec.executables   = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
 
-  # Uncomment to register a new dependency of your gem
   spec.add_dependency 'rails', '>= 5'
-
-  # For more information and examples about making a new gem, checkout our
-  # guide at: https://bundler.io/guides/creating_gem.html
 end

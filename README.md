@@ -1,8 +1,8 @@
-# ViewComponentStyles
+# View Component Styles
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/view_component-styles`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Stylesheet aggregation for view components. Automatically combines component-specific stylesheets into a single sheet
+that can be included in a single location. Great for using components in mailers, aggregating styles, then loading them
+all at once so they can be pulled into premailer.
 
 ## Installation
 
@@ -22,7 +22,55 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+```ruby
+class ApplicationComponent < ViewComponent::Base
+  include ViewComponent::Styles::Component
+end
+```
+```ruby
+class ApplicationMailer < ActionMailer::Base
+  include ViewComponent::Styles::Controller
+  helper ViewComponent::Styles::Helper
+end
+```
+Then just create a component and a matching CSS/SCSS file like so:
+
+`components/user_component.rb`
+```ruby
+class UserComponent < ApplicationComponent
+  def initialize(user)
+    @user = user
+  end
+end
+```
+`components/user_component.scss`
+```scss
+.name {
+  font-style: italic;
+}
+```
+`components/user_component.html.erb`
+```html
+<div class="name">
+  <%= @user.name %>
+</div>
+```
+In your layout, all you have to do is include the single stylesheet tag:
+
+`views/layouts/layout.html.erb`
+```html
+<html>
+<head>
+  <%= singleton_stylesheet_link_tags %>
+</head>
+<body>
+  <%= yield %>
+</body>
+</html>
+```
+At this point you're all set up! Whenever a component is included in a view that renders inside the configured layout,
+styles will be aggregated into a single stylesheet and then loaded right into the layout. From here, they can be
+rendered regularly or picked up by premailer for inlining.
 
 ## Development
 
