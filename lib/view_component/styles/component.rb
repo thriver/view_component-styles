@@ -3,6 +3,8 @@
 module ViewComponent
   module Styles
     module Component
+      include ViewComponent::Styles::Helper
+
       # @param path [String]
       # @return [Boolean]
       def asset_exists?(path)
