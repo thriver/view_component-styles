@@ -3,7 +3,7 @@
 module ViewComponent
   module Styles
     module Controller
-      include Helper
+      include ViewComponent::Styles::Helper
 
       def singleton_stylesheets
         @singleton_stylesheets ||= Set.new

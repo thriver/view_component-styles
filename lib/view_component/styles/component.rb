@@ -3,7 +3,7 @@
 module ViewComponent
   module Styles
     module Component
-      include Helper
+      include ViewComponent::Styles::Helper
 
       # @return [void]
       def before_render
