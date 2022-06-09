@@ -3,7 +3,17 @@
 module ViewComponent
   module Styles
     module Component
-      include ViewComponent::Styles::Helper
+      # @param path [String]
+      # @return [Boolean]
+      def asset_exists?(path)
+        if Rails.configuration.assets.compile
+          # Dynamic compilation
+          Rails.application.assets.find_asset(path).present?
+        else
+          # Pre-compiled
+          Rails.application.assets_manifest.assets[path].present?
+        end
+      end
 
       # @return [void]
       def before_render
