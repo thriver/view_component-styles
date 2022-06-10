@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'view_component/styles/engine'
 require 'view_component/styles/version'
 
 module ViewComponent
