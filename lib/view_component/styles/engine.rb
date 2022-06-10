@@ -3,7 +3,9 @@
 module ViewComponent
   module Styles
     class Engine < Rails::Engine
-      config.assets.paths << Rails.root.join('app', 'components')
+      initializer 'view_component-styles.assets.paths' do |app|
+        config.assets.paths << app.root.join('app', 'components')
+      end
     end
   end
 end
