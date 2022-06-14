@@ -19,6 +19,7 @@ module ViewComponent
 
       # @return [void]
       def before_render
+        super
         singleton_stylesheet_link_tag(component_stylesheet_name) if asset_exists?(component_stylesheet_name)
       end
 

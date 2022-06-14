@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    view_component-styles (0.1.0)
+    view_component-styles (0.2.0)
       rails (>= 5)
 
 GEM
