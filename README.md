@@ -24,7 +24,7 @@ Or install it yourself as:
 
 ```ruby
 class ApplicationComponent < ViewComponent::Base
-  include ViewComponent::Styles::Component
+  extend ViewComponent::Styles::Component
 end
 ```
 ```ruby
@@ -72,13 +72,9 @@ At this point you're all set up! Whenever a component is included in a view that
 styles will be aggregated into a single stylesheet and then loaded right into the layout. From here, they can be
 rendered regularly or picked up by premailer for inlining.
 
-Note that in order to properly configure the asset pipeline in Rails in order to be compatible with this gem, you may
+Note that in order to properly configure the asset pipeline in Rails to compile component stylesheets, you may
 need to add the following configuration:
 
-`application.rb`
-```ruby
-config.assets.paths << Rails.root.join('app', 'components')
-```
 `assets/config/manifest.js`
 ```
 //= link_tree ../../components .css
