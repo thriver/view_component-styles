@@ -22,16 +22,17 @@ module ViewComponent
         subclass.include(ViewComponent::Styles::Helper)
 
         component_stylesheet_name = subclass.component_stylesheet_name
-        return unless asset_exists?(component_stylesheet_name)
 
         subclass.prepend(Module.new.tap do |m|
           m.class_eval(<<-RUBY, __FILE__, __LINE__ + 1)
             # def before_render
             #   super
+            #   return unless self.class.asset_exists?("example")
             #   singleton_stylesheet_link_tag("example")
             # end
             def before_render
               super
+              return unless self.class.asset_exists?(#{component_stylesheet_name.inspect})
               singleton_stylesheet_link_tag(#{component_stylesheet_name.inspect})
             end
           RUBY
