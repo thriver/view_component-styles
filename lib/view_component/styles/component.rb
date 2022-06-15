@@ -3,10 +3,6 @@
 module ViewComponent
   module Styles
     module Component
-      include ViewComponent::Styles::Helper
-
-      # @param path [String]
-      # @return [Boolean]
       def asset_exists?(path)
         if Rails.configuration.assets.compile
           # Dynamic compilation
@@ -17,15 +13,29 @@ module ViewComponent
         end
       end
 
-      # @return [void]
-      def before_render
-        super
-        singleton_stylesheet_link_tag(component_stylesheet_name) if asset_exists?(component_stylesheet_name)
+      def component_stylesheet_name
+        "#{name.underscore}.css"
       end
 
-      # @return [String]
-      def component_stylesheet_name
-        "#{self.class.name.underscore}.css"
+      def inherited(subclass)
+        super
+        subclass.include(ViewComponent::Styles::Helper)
+
+        component_stylesheet_name = subclass.component_stylesheet_name
+        return unless asset_exists?(component_stylesheet_name)
+
+        subclass.prepend(Module.new.tap do |m|
+          m.class_eval(<<-RUBY, __FILE__, __LINE__ + 1)
+            # def before_render
+            #   super
+            #   singleton_stylesheet_link_tag("example")
+            # end
+            def before_render
+              super
+              singleton_stylesheet_link_tag(#{component_stylesheet_name.inspect})
+            end
+          RUBY
+        end)
       end
     end
   end
